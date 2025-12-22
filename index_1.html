@@ -93,11 +93,11 @@
       .filters {
         display: flex;
         padding: 16px;
-        gap: 12px;
+        gap: 8px;
         background: var(--bg-primary);
         overflow-x: auto;
         transition: background-color 0.3s, border-color 0.3s;
-        border-bottom: none;
+        border-bottom: 1px solid var(--border-color);
       }
 
       .filters::-webkit-scrollbar {
@@ -105,15 +105,15 @@
       }
 
       .filter-btn {
-        padding: 12px 24px;
-        border: none;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 100px;
-        font-size: 15px;
-        font-weight: 600;
+        padding: 10px 18px;
+        border: 1px solid var(--border-color);
+        background: var(--bg-secondary);
+        border-radius: 24px;
+        font-size: 13px;
+        font-weight: 500;
         cursor: pointer;
         white-space: nowrap;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         color: var(--text-secondary);
       }
 
@@ -131,12 +131,20 @@
       .explore-feed {
         padding: 15px;
         padding-bottom: 80px;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
       }
 
       .event-card {
+        background: var(--card-bg);
+        border-radius: 20px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid var(--border-color);
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+        margin-bottom: 16px;
+      }
+
+      .event-card-image {
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -144,20 +152,21 @@
         overflow: hidden;
         cursor: pointer;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        height: 280px;
+        height: 300px;
         position: relative;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
       }
 
-      .event-card:hover {
+      .event-card-image:first-of-type {
+        margin-top: 0;
+      }
+
+      .event-card-image:hover {
         transform: translateY(-4px);
         box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.5);
       }
 
       .event-image {
-        display: none;
-      }
-      .event-page-image{
         width: 100%;
         height: 200px;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -167,15 +176,27 @@
         font-size: 64px;
         position: relative;
         border-radius: 0;
-        padding-bottom: 100px;
+      }
+
+      .event-page-image {
+        /* background-size: cover; */
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 16px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        height: 280px;
+        position: relative;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        margin-bottom: 40px;
       }
 
       .save-btn {
         position: absolute;
         top: 8px;
         right: 8px;
-        background: rgba(0, 0, 0, 0.6);
-        color: white;
+        background-color: transparent;
         border: none;
         border-radius: 50%;
         width: 36px;
@@ -211,34 +232,39 @@
       }
 
       .event-info {
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .event-info-image {
         position: absolute;
         bottom: 0;
         left: 0;
         right: 0;
-        padding: 12px;
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.6) 70%, transparent 100%);
+        padding: 10px;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.9) 0%,
+          rgba(0, 0, 0, 0.7) 60%,
+          transparent 100%
+        );
         display: flex;
         flex-direction: column;
-        gap: 4px;
-      }
-
-      .event-location {
-        font-size: 11px;
-        color: rgba(255, 255, 255, 0.8);
-        font-weight: 400;
-        margin-bottom: 2px;
+        gap: 2px;
       }
 
       .event-title {
-        font-size: 14px;
+        font-size: 16px;
         font-weight: 600;
-        color: white;
+        margin-bottom: 2px;
+        color: var(--text-primary);
         letter-spacing: -0.01em;
         line-height: 1.3;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
+        white-space: nowrap; /* Keeps text on one line */
         overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .event-meta {
@@ -247,9 +273,94 @@
         margin-bottom: 3px;
       }
 
-      .meta-icon {
+      .event-location,
+      .event-date,
+      .event-host {
+        font-size: 11px;
+        color: #b8b8b8;
+        margin-bottom: 3px;
+        display: flex;
+        align-items: flex-start;
+        gap: 6px;
+        font-weight: 400;
+        line-height: 1.3;
+      }
+
+      .event-date .meta-icon,
+      .event-location .meta-icon,
+      .event-host .meta-icon {
         color: #667eea;
+        width: 16px;
+        height: 16px;
         flex-shrink: 0;
+        margin-top: 0px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .meta-icon svg {
+        width: 100%;
+        height: 100%;
+        stroke: currentColor;
+        fill: none;
+      }
+
+      .event-attendees-bottom {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 6px;
+      }
+
+      .attendee-avatars-card {
+        display: flex;
+        gap: -8px;
+      }
+
+      .attendee-avatars-card .avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 600;
+        border: 2px solid rgba(0, 0, 0, 0.8);
+        margin-left: -6px;
+        overflow: hidden;
+      }
+
+      .attendee-avatars-card .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .attendee-avatars-card .avatar:first-child {
+        margin-left: 0;
+      }
+
+      .event-attendees-count {
+        font-size: 11px;
+        color: #b8b8b8;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-weight: 400;
+      }
+
+      .event-attendees-count .meta-icon {
+        color: #667eea;
+        width: 14px;
+        height: 14px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .event-attendees {
@@ -296,13 +407,17 @@
         transform: translateX(-50%);
         width: 100%;
         max-width: 414px;
-        background: var(--bg-secondary);
+        background: transparent;
         display: flex;
         justify-content: around;
-        padding: 12px 16px;
+        padding: 15px;
         transition: background-color 0.3s, border-color 0.3s;
-        backdrop-filter: blur(20px);
-        border-top: 1px solid var(--border-color);
+        backdrop-filter: blur(10px);
+      }
+
+      body.light-mode .bottom-nav {
+        background: rgba(255, 255, 255, 0.7);
+        border-top: 1px solid transparent;
       }
 
       .nav-item {
@@ -744,13 +859,17 @@
       }
 
       .profile-header::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.2) 100%);
+        background: linear-gradient(
+          180deg,
+          transparent 0%,
+          rgba(0, 0, 0, 0.2) 100%
+        );
       }
 
       .profile-avatar-large {
@@ -864,7 +983,23 @@
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         cursor: pointer;
       }
-
+      .grid-container {
+        /* Defines 4 columns, each taking 1 fraction of the space */
+        /* Defines 4 rows, each taking 1 fraction of the space */
+        /* The gap between items */
+        gap: 15px;
+        /* Makes the container a perfect square */
+        width: 400px;
+        height: 400px;
+        margin: 20px auto;
+        display: grid;
+        /* grid-template-rows: 200px auto; */
+        /* grid-template-columns: repeat(2, 1fr); */
+        grid-template-columns: 1fr 1fr;
+      }
+      .grid-item {
+        /* height: 400px; */
+      }
       .profile-event-item:hover {
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
@@ -1157,34 +1292,34 @@
             id="filterSocialBtn"
             onclick="toggleCategoryFilter('social')"
           >
-            🎉 Social
+            Social
           </button>
           <button
             class="filter-btn"
             id="filterFitnessBtn"
             onclick="toggleCategoryFilter('fitness')"
           >
-            💪 Fitness
+            Fitness
           </button>
           <button
             class="filter-btn"
             id="filterCreativeBtn"
             onclick="toggleCategoryFilter('creative')"
           >
-            🎨 Creative
+            Creative
           </button>
           <button
             class="filter-btn"
             id="filterProfessionalBtn"
             onclick="toggleCategoryFilter('professional')"
           >
-            💼 Professional
+            Professional
           </button>
           <button
             class="filter-btn"
             onclick="openModal('advancedFiltersModal')"
           >
-            ⚙️ Filters
+            Filters
           </button>
         </div>
         <div id="eventsList"></div>
@@ -1311,7 +1446,9 @@
               stroke="currentColor"
               stroke-width="2"
             >
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              <path
+                d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+              ></path>
             </svg>
           </div>
           <!-- <div class="label">Messages</div> -->
@@ -1474,10 +1611,10 @@
               <div style="display: flex; gap: 8px">
                 <select id="filterCategory" name="category" style="flex: 1">
                   <option value="">Select Category</option>
-                  <option value="social">🎉 Social</option>
-                  <option value="fitness">💪 Fitness</option>
-                  <option value="creative">🎨 Creative</option>
-                  <option value="professional">💼 Professional</option>
+                  <option value="social">Social</option>
+                  <option value="fitness">Fitness</option>
+                  <option value="creative">Creative</option>
+                  <option value="professional">Professional</option>
                 </select>
                 <button
                   type="button"
@@ -1563,21 +1700,46 @@
             &times;
           </button>
         </div>
-        <div class="modal-body" style="padding: 0; display: flex; flex-direction: column; height: calc(100vh - 80px);">
-          <div id="chatMessages" style="flex: 1; overflow-y: auto; padding: 20px;"></div>
-          <div style="padding: 16px; border-top: 1px solid var(--border-color); background: var(--bg-secondary);">
-            <div style="display: flex; gap: 10px;">
+        <div
+          class="modal-body"
+          style="
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 80px);
+          "
+        >
+          <div
+            id="chatMessages"
+            style="flex: 1; overflow-y: auto; padding: 20px"
+          ></div>
+          <div
+            style="
+              padding: 16px;
+              border-top: 1px solid var(--border-color);
+              background: var(--bg-secondary);
+            "
+          >
+            <div style="display: flex; gap: 10px">
               <input
                 type="text"
                 id="chatInput"
                 placeholder="Type a message..."
-                style="flex: 1; padding: 12px 16px; border: 1px solid var(--border-color); border-radius: 24px; background: var(--bg-tertiary); color: var(--text-primary); font-size: 14px;"
+                style="
+                  flex: 1;
+                  padding: 12px 16px;
+                  border: 1px solid var(--border-color);
+                  border-radius: 24px;
+                  background: var(--bg-tertiary);
+                  color: var(--text-primary);
+                  font-size: 14px;
+                "
                 onkeypress="if(event.key === 'Enter') sendMessage()"
               />
               <button
                 onclick="sendMessage()"
                 class="btn btn-success"
-                style="width: auto; padding: 12px 24px; border-radius: 24px;"
+                style="width: auto; padding: 12px 24px; border-radius: 24px"
               >
                 Send
               </button>
@@ -1610,13 +1772,29 @@
           description:
             "Join us for an exciting weekend hike through beautiful mountain trails. Suitable for beginners to intermediate hikers.",
           attendees: [
-            { name: "Alex Johnson", initial: "AJ", mutual: true },
-            { name: "Maria Garcia", initial: "MG", mutual: false },
-            { name: "James Wilson", initial: "JW", mutual: true },
+            {
+              name: "Alex Johnson",
+              initial: "AJ",
+              mutual: true,
+              avatar: "https://i.pravatar.cc/150?img=12",
+            },
+            {
+              name: "Maria Garcia",
+              initial: "MG",
+              mutual: false,
+              avatar: "https://i.pravatar.cc/150?img=5",
+            },
+            {
+              name: "James Wilson",
+              initial: "JW",
+              mutual: true,
+              avatar: "https://i.pravatar.cc/150?img=33",
+            },
           ],
           rating: 4.8,
           saved: false,
-          image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&h=600&fit=crop"
+          image:
+            "https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&h=600&fit=crop",
         },
         {
           id: 2,
@@ -1632,13 +1810,29 @@
           description:
             "Learn basic painting techniques from professional artists. All materials provided. Perfect for beginners!",
           attendees: [
-            { name: "Emma Stone", initial: "ES", mutual: true },
-            { name: "Oliver Brown", initial: "OB", mutual: false },
-            { name: "Sophie Turner", initial: "ST", mutual: false },
+            {
+              name: "Emma Stone",
+              initial: "ES",
+              mutual: true,
+              avatar: "https://i.pravatar.cc/150?img=9",
+            },
+            {
+              name: "Oliver Brown",
+              initial: "OB",
+              mutual: false,
+              avatar: "https://i.pravatar.cc/150?img=13",
+            },
+            {
+              name: "Sophie Turner",
+              initial: "ST",
+              mutual: false,
+              avatar: "https://i.pravatar.cc/150?img=10",
+            },
           ],
           rating: 4.5,
           saved: false,
-          image: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800&h=600&fit=crop"
+          image:
+            "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800&h=600&fit=crop",
         },
         {
           id: 3,
@@ -1654,14 +1848,35 @@
           description:
             "Meet fellow tech enthusiasts, entrepreneurs, and investors. Great opportunity to expand your network.",
           attendees: [
-            { name: "Lisa Chen", initial: "LC", mutual: true },
-            { name: "Mark Thompson", initial: "MT", mutual: true },
-            { name: "Rachel Green", initial: "RG", mutual: false },
-            { name: "Paul Anderson", initial: "PA", mutual: false },
+            {
+              name: "Lisa Chen",
+              initial: "LC",
+              mutual: true,
+              avatar: "https://i.pravatar.cc/150?img=1",
+            },
+            {
+              name: "Mark Thompson",
+              initial: "MT",
+              mutual: true,
+              avatar: "https://i.pravatar.cc/150?img=11",
+            },
+            {
+              name: "Rachel Green",
+              initial: "RG",
+              mutual: false,
+              avatar: "https://i.pravatar.cc/150?img=16",
+            },
+            {
+              name: "Paul Anderson",
+              initial: "PA",
+              mutual: false,
+              avatar: "https://i.pravatar.cc/150?img=7",
+            },
           ],
           rating: 4.2,
           saved: false,
-          image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=600&fit=crop"
+          image:
+            "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=600&fit=crop",
         },
         {
           id: 4,
@@ -1677,13 +1892,29 @@
           description:
             "Evening of live jazz music with drinks and appetizers. Dress code: Smart casual.",
           attendees: [
-            { name: "Chris Evans", initial: "CE", mutual: false },
-            { name: "Diana Ross", initial: "DR", mutual: true },
-            { name: "Edward Norton", initial: "EN", mutual: false },
+            {
+              name: "Chris Evans",
+              initial: "CE",
+              mutual: false,
+              avatar: "https://i.pravatar.cc/150?img=14",
+            },
+            {
+              name: "Diana Ross",
+              initial: "DR",
+              mutual: true,
+              avatar: "https://i.pravatar.cc/150?img=20",
+            },
+            {
+              name: "Edward Norton",
+              initial: "EN",
+              mutual: false,
+              avatar: "https://i.pravatar.cc/150?img=8",
+            },
           ],
           rating: 4.7,
           saved: false,
-          image: "https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=800&h=600&fit=crop"
+          image:
+            "https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=800&h=600&fit=crop",
         },
         {
           id: 5,
@@ -1699,43 +1930,133 @@
           description:
             "Start your day with a refreshing yoga session followed by guided meditation.",
           attendees: [
-            { name: "Hannah Montana", initial: "HM", mutual: true },
-            { name: "Ian McKellen", initial: "IM", mutual: false },
+            {
+              name: "Hannah Montana",
+              initial: "HM",
+              mutual: true,
+              avatar: "https://i.pravatar.cc/150?img=19",
+            },
+            {
+              name: "Ian McKellen",
+              initial: "IM",
+              mutual: false,
+              avatar: "https://i.pravatar.cc/150?img=15",
+            },
           ],
           rating: 4.9,
           saved: false,
-          image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&h=600&fit=crop"
+          image:
+            "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&h=600&fit=crop",
         },
       ];
 
       const chatMessages = {
         "dm-sarah": [
-          { sender: "Sarah Chen", text: "Hey! Looking forward to the hike this weekend!", timestamp: "10:30 AM", isMe: false },
-          { sender: "You", text: "Me too! Should I bring anything?", timestamp: "10:32 AM", isMe: true },
-          { sender: "Sarah Chen", text: "Just water and good vibes! See you there 😊", timestamp: "10:35 AM", isMe: false }
+          {
+            sender: "Sarah Chen",
+            text: "Hey! Looking forward to the hike this weekend!",
+            timestamp: "10:30 AM",
+            isMe: false,
+          },
+          {
+            sender: "You",
+            text: "Me too! Should I bring anything?",
+            timestamp: "10:32 AM",
+            isMe: true,
+          },
+          {
+            sender: "Sarah Chen",
+            text: "Just water and good vibes! See you there 😊",
+            timestamp: "10:35 AM",
+            isMe: false,
+          },
         ],
         "dm-maya": [
-          { sender: "Maya Patel", text: "Thanks for signing up for the art workshop!", timestamp: "Yesterday", isMe: false },
-          { sender: "You", text: "Can't wait! Do I need to bring my own supplies?", timestamp: "Yesterday", isMe: true },
-          { sender: "Maya Patel", text: "Nope, everything is provided!", timestamp: "Yesterday", isMe: false }
+          {
+            sender: "Maya Patel",
+            text: "Thanks for signing up for the art workshop!",
+            timestamp: "Yesterday",
+            isMe: false,
+          },
+          {
+            sender: "You",
+            text: "Can't wait! Do I need to bring my own supplies?",
+            timestamp: "Yesterday",
+            isMe: true,
+          },
+          {
+            sender: "Maya Patel",
+            text: "Nope, everything is provided!",
+            timestamp: "Yesterday",
+            isMe: false,
+          },
         ],
         "group-1": [
-          { sender: "Sarah Chen", text: "Welcome to the Weekend Hike group! 🏔️", timestamp: "2:00 PM", isMe: false },
-          { sender: "Alex Johnson", text: "Excited to join! What's the difficulty level?", timestamp: "2:15 PM", isMe: false },
-          { sender: "Sarah Chen", text: "It's beginner-friendly with some moderate sections", timestamp: "2:20 PM", isMe: false },
-          { sender: "You", text: "Perfect! What time should we arrive?", timestamp: "2:25 PM", isMe: true },
-          { sender: "Sarah Chen", text: "8 AM sharp! We'll start with a quick intro", timestamp: "2:30 PM", isMe: false }
-        ]
+          {
+            sender: "Sarah Chen",
+            text: "Welcome to the Weekend Hike group! 🏔️",
+            timestamp: "2:00 PM",
+            isMe: false,
+          },
+          {
+            sender: "Alex Johnson",
+            text: "Excited to join! What's the difficulty level?",
+            timestamp: "2:15 PM",
+            isMe: false,
+          },
+          {
+            sender: "Sarah Chen",
+            text: "It's beginner-friendly with some moderate sections",
+            timestamp: "2:20 PM",
+            isMe: false,
+          },
+          {
+            sender: "You",
+            text: "Perfect! What time should we arrive?",
+            timestamp: "2:25 PM",
+            isMe: true,
+          },
+          {
+            sender: "Sarah Chen",
+            text: "8 AM sharp! We'll start with a quick intro",
+            timestamp: "2:30 PM",
+            isMe: false,
+          },
+        ],
       };
 
       const messagesList = [
-        { id: "dm-sarah", name: "Sarah Chen", lastMessage: "Just water and good vibes! See you there 😊", time: "10:35 AM", unread: 2, avatar: "SC", isGroup: false },
-        { id: "group-1", name: "Weekend Hike Group", lastMessage: "8 AM sharp! We'll start with a quick intro", time: "2:30 PM", unread: 0, avatar: "🏔️", isGroup: true },
-        { id: "dm-maya", name: "Maya Patel", lastMessage: "Nope, everything is provided!", time: "Yesterday", unread: 0, avatar: "MP", isGroup: false }
+        {
+          id: "dm-sarah",
+          name: "Sarah Chen",
+          lastMessage: "Just water and good vibes! See you there 😊",
+          time: "10:35 AM",
+          unread: 2,
+          avatar: "SC",
+          isGroup: false,
+        },
+        {
+          id: "group-1",
+          name: "Weekend Hike Group",
+          lastMessage: "8 AM sharp! We'll start with a quick intro",
+          time: "2:30 PM",
+          unread: 0,
+          avatar: "🏔️",
+          isGroup: true,
+        },
+        {
+          id: "dm-maya",
+          name: "Maya Patel",
+          lastMessage: "Nope, everything is provided!",
+          time: "Yesterday",
+          unread: 0,
+          avatar: "MP",
+          isGroup: false,
+        },
       ];
 
       const groupChats = {
-        1: { id: "group-1", name: "Weekend Hike Group", eventId: 1 }
+        1: { id: "group-1", name: "Weekend Hike Group", eventId: 1 },
       };
 
       function switchPage(page, navItem) {
@@ -1804,37 +2125,74 @@
             (e) => e.category === currentFilter
           );
         }
-
-        eventsList.innerHTML = filteredEvents
-          .map(
-            (event) => `
-                <div class="event-card" onclick="showEventDetails(${event.id})" style="background-image: url('${event.image}');">
-                    <div class="category-badge">
-                        ${getCategoryIcon(event.category)}
+        // removing grid ensures that is vertical rather than grid
+        eventsList.innerHTML = `
+          <div class="grid-container" style="width: 100%; height: 100px;  gap: 15px; margin: 0; padding: 15px;">
+            ${filteredEvents
+              .map(
+                (event) => `
+            <div class = "grid-item">
+              <div class="event-card-image" onclick="showEventDetails(${
+                event.id
+              })" style="background-image: url('${
+                  event.image ||
+                  "https://via.placeholder.com/800x600?text=" +
+                    encodeURIComponent(event.title)
+                }'); height: 300px; cursor: pointer;">
+                  <button class="save-btn" onclick="toggleSave(event, ${
+                    event.id
+                  })">
+                  ${event.saved ? "❤️" : "🤍"}
+                  </button>
+                  <div class="event-info-image">
+                  <div class="event-title">${event.title}</div>
+                  <div class="event-date"><span class="meta-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span> ${formatDateTime(
+                    event.date,
+                    event.time
+                  )}</div>
+                  <div class="event-location"><span class="meta-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></span> ${getVenueName(
+                    event.location
+                  )}</div>
+                  <div class="event-host"><span class="meta-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span> ${
+                    event.host
+                  }</div>
+                  <div class="event-attendees-bottom">
+                    <div class="attendee-avatars-card">
+                      ${event.attendees
+                        .slice(0, 3)
+                        .map(
+                          (attendee) =>
+                            `<div class="avatar">${
+                              attendee.avatar
+                                ? `<img src="${attendee.avatar}" alt="${attendee.name}">`
+                                : attendee.initial
+                            }</div>`
+                        )
+                        .join("")}
                     </div>
-                    <button class="save-btn" onclick="toggleSave(event, ${event.id})">
-                        ${event.saved ? '❤️' : '🤍'}
-                        <span class="count">${event.currentAttendees}</span>
-                    </button>
-                    <div class="event-info">
-                        <div class="event-location">${event.location}</div>
-                        <div class="event-title">${event.title}</div>
-                    </div>
-                </div>
-            `
-          )
-          .join("");
+                    <div class="event-attendees-count"> ${
+                      event.currentAttendees
+                    } going</div>
+                  </div>
+                  </div>
+              </div>
+              </div>
+              `
+              )
+              .join("")}
+          </div>
+        `;
       }
 
       // returns the icon for the event category
       function getCategoryIcon(category) {
-        const icons = {
-          social: "🎉",
-          fitness: "💪",
-          creative: "🎨",
-          professional: "💼",
-        };
-        return icons[category] || "📅";
+        // const icons = {
+        //   social: "🎉",
+        //   fitness: "💪",
+        //   creative: "🎨",
+        //   professional: "💼",
+        // };
+        // return icons[category] || "📅";
       }
 
       function formatDate(dateStr) {
@@ -1844,6 +2202,20 @@
           month: "short",
           day: "numeric",
         });
+      }
+
+      function formatDateTime(dateStr, timeStr) {
+        const date = new Date(dateStr);
+        const formattedDate = date.toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+        });
+        return `${formattedDate} at ${timeStr}`;
+      }
+
+      function getVenueName(location) {
+        // Extract venue name without city (part before comma)
+        return location.split(",")[0].trim();
       }
 
       function renderStars(rating) {
@@ -1916,13 +2288,15 @@
 
         document.getElementById("modalTitle").textContent = event.title;
         // need to dadd image
-            
+
         modalBody.innerHTML = `
-             <div class="event-page-image">
+             <div class="event-page-image" style="background-image: url('${
+               event.image
+             }');">
                     </div>
-                <div class="section">
+                <div class="section">   
                     <div class="event-meta">
-                        <svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                             <line x1="16" y1="2" x2="16" y2="6"></line>
                             <line x1="8" y1="2" x2="8" y2="6"></line>
@@ -1931,21 +2305,21 @@
                         ${formatDate(event.date)} at ${event.time}
                     </div>
                     <div class="event-meta">
-                        <svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                             <circle cx="12" cy="10" r="3"></circle>
                         </svg>
                         ${event.location}
                     </div>
                     <div class="event-meta">
-                        <svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
                         </svg>
                         Hosted by ${event.host}
                     </div>
                     <div class="event-meta">
-                        <svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M12 1v6m0 6v6"></path>
                             <path d="M4.22 4.22l4.24 4.24m4.24 4.24l4.24 4.24"></path>
                             <path d="M1 12h6m6 0h6"></path>
@@ -1954,7 +2328,7 @@
                         ${event.cost === 0 ? "Free" : "$" + event.cost}
                     </div>
                     <div class="event-meta">
-                        <svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                             <circle cx="9" cy="7" r="4"></circle>
                             <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
@@ -2002,7 +2376,11 @@
                           .slice(0, 3)
                           .map(
                             (attendee) => `
-                            <div class="avatar">${attendee.initial}</div>
+                            <div class="avatar">${
+                              attendee.avatar
+                                ? `<img src="${attendee.avatar}" alt="${attendee.name}">`
+                                : attendee.initial
+                            }</div>
                         `
                           )
                           .join("")}
@@ -2015,7 +2393,7 @@
                         }
                         <span class="event-meta" style="margin-left: 8px;">${
                           event.currentAttendees
-                        } going</span>
+                        } </span>
                     </div>
                     <div class="attendees-list-container" id="attendees-list-${
                       event.id
@@ -2060,7 +2438,11 @@
                           .slice(0, 3)
                           .map(
                             (attendee) => `
-                            <div class="avatar">${attendee.initial}</div>
+                            <div class="avatar">${
+                              attendee.avatar
+                                ? `<img src="${attendee.avatar}" alt="${attendee.name}">`
+                                : attendee.initial
+                            }</div>
                         `
                           )
                           .join("")}
@@ -2073,7 +2455,7 @@
                         }
                         <span class="event-meta" style="margin-left: 8px;">${
                           event.currentAttendees
-                        } going</span>
+                        } </span>
                     </div>
                     <div class="attendees-list-container" id="attendees-list-one-${
                       event.id
@@ -2168,17 +2550,44 @@
           savedContainer.innerHTML = savedEvents
             .map(
               (event) => `
-                    <div class="event-card" onclick="showEventDetails(${event.id})" style="background-image: url('${event.image}');">
-                        <div class="category-badge">
-                            ${getCategoryIcon(event.category)}
-                        </div>
-                        <button class="save-btn" onclick="toggleSave(event, ${event.id})">
-                            ${event.saved ? '❤️' : '🤍'}
-                            <span class="count">${event.currentAttendees}</span>
+                    <div class="event-card-image" onclick="showEventDetails(${
+                      event.id
+                    })" style="background-image: url('${event.image}');">
+                        <button class="save-btn" onclick="toggleSave(event, ${
+                          event.id
+                        })">
+                            ${event.saved ? "❤️" : "🤍"}
                         </button>
-                        <div class="event-info">
-                            <div class="event-location">${event.location}</div>
+                        <div class="event-info-image">
                             <div class="event-title">${event.title}</div>
+                            <div class="event-date"><span class="meta-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span> ${formatDateTime(
+                              event.date,
+                              event.time
+                            )}</div>
+                            <div class="event-location"><span class="meta-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></span> ${getVenueName(
+                              event.location
+                            )}</div>
+                            <div class="event-host"><span class="meta-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span> ${
+                              event.host
+                            }</div>
+                            <div class="event-attendees-bottom">
+                              <div class="attendee-avatars-card">
+                                ${event.attendees
+                                  .slice(0, 3)
+                                  .map(
+                                    (attendee) =>
+                                      `<div class="avatar">${
+                                        attendee.avatar
+                                          ? `<img src="${attendee.avatar}" alt="${attendee.name}">`
+                                          : attendee.initial
+                                      }</div>`
+                                  )
+                                  .join("")}
+                              </div>
+                              <div class="event-attendees-count"> ${
+                                event.currentAttendees
+                              } </div>
+                            </div>
                         </div>
                     </div>
                 `
@@ -2416,65 +2825,39 @@
         eventsList.innerHTML = filteredEvents
           .map(
             (event) => `
-                <div class="event-card" onclick="showEventDetails(${event.id})">
-                    <div class="event-image">
-                        ${getCategoryIcon(event.category)}
-                        ${getSaveButtonHTML(event.id, event.saved)}
-                    </div>
-                    <div class="event-info">
+                <div class="event-card-image" onclick="showEventDetails(${
+                  event.id
+                })" style="background-image: url('${event.image}');">
+                    <button class="save-btn" onclick="toggleSave(event, ${
+                      event.id
+                    })">
+                        ${event.saved ? "❤️" : "🤍"}
+                    </button>
+                    <div class="event-info-image">
                         <div class="event-title">${event.title}</div>
-                            <div class="event-meta">
-                            <svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                <line x1="16" y1="2" x2="16" y2="6"></line>
-                                <line x1="8" y1="2" x2="8" y2="6"></line>
-                                <line x1="3" y1="10" x2="21" y2="10"></line>
-                            </svg>
-                            ${formatDate(event.date)} at ${event.time}
-                        </div>
-                                                <div class="event-meta">
-                            <svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                <circle cx="12" cy="10" r="3"></circle>
-                            </svg>
-                            ${event.location}
-                        </div>
-                                                <div class="event-meta">
-                            <svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                            ${event.host}
-                        </div>
-                        <div class="event-attendees">
-                            <div class="attendee-avatars" onclick="showAttendeesList(event, ${
-                              event.id
-                            }); event.stopPropagation();">
-                                ${event.attendees
-                                  .slice(0, 3)
-                                  .map(
-                                    (attendee) => `
-                                    <div class="avatar">${attendee.initial}</div>
-                                `
-                                  )
-                                  .join("")}
-                                ${
-                                  event.attendees.length > 3
-                                    ? `<div class="avatar">+${
-                                        event.attendees.length - 3
-                                      }</div>`
-                                    : ""
-                                }
-                            </div>
-                                               <span class="event-meta" style="margin-left: 8px;">
-                                <svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="9" cy="7" r="4"></circle>
-                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                </svg>
-                                ${event.currentAttendees} going
-                            </span>
+                        <div class="event-date"><span class="meta-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span> ${formatDateTime(
+                          event.date,
+                          event.time
+                        )}</div>
+                        <div class="event-location"><span class="meta-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></span> ${getVenueName(
+                          event.location
+                        )}</div>
+                        <div class="event-host"><span class="meta-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span> ${
+                          event.host
+                        }</div>
+                        <div class="event-attendees-bottom">
+                          <div class="attendee-avatars-card">
+                            ${event.attendees
+                              .slice(0, 3)
+                              .map(
+                                (attendee) =>
+                                  `<div class="avatar">${attendee.initial}</div>`
+                              )
+                              .join("")}
+                          </div>
+                          <div class="event-attendees-count">${
+                            event.currentAttendees
+                          } going</div>
                         </div>
                     </div>
                 </div>
@@ -2506,10 +2889,10 @@
           "selectedCategoriesContainer"
         );
         const categoryLabels = {
-          social: "🎉 Social",
-          fitness: "💪 Fitness",
-          creative: "🎨 Creative",
-          professional: "💼 Professional",
+          // social: "🎉 Social",
+          // fitness: "💪 Fitness",
+          // creative: "🎨 Creative",
+          // professional: "💼 Professional",
         };
 
         container.innerHTML = selectedCategoriesArray
@@ -2567,17 +2950,40 @@
         eventsList.innerHTML = filteredEvents
           .map(
             (event) => `
-                <div class="event-card" onclick="showEventDetails(${event.id})" style="background-image: url('${event.image}');">
-                    <div class="category-badge">
-                        ${getCategoryIcon(event.category)}
-                    </div>
-                    <button class="save-btn" onclick="toggleSave(event, ${event.id})">
-                        ${event.saved ? '❤️' : '🤍'}
-                        <span class="count">${event.currentAttendees}</span>
+                <div class="event-card-image" onclick="showEventDetails(${
+                  event.id
+                })" style="background-image: url('${event.image}');">
+                    <button class="save-btn" onclick="toggleSave(event, ${
+                      event.id
+                    })">
+                        ${event.saved ? "❤️" : "🤍"}
                     </button>
-                    <div class="event-info">
-                        <div class="event-location">${event.location}</div>
+                    <div class="event-info-image">
                         <div class="event-title">${event.title}</div>
+                        <div class="event-date"><span class="meta-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span> ${formatDateTime(
+                          event.date,
+                          event.time
+                        )}</div>
+                        <div class="event-location"><span class="meta-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></span> ${getVenueName(
+                          event.location
+                        )}</div>
+                        <div class="event-host"><span class="meta-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span> ${
+                          event.host
+                        }</div>
+                        <div class="event-attendees-bottom">
+                          <div class="attendee-avatars-card">
+                            ${event.attendees
+                              .slice(0, 3)
+                              .map(
+                                (attendee) =>
+                                  `<div class="avatar">${attendee.initial}</div>`
+                              )
+                              .join("")}
+                          </div>
+                          <div class="event-attendees-count"> ${
+                            event.currentAttendees
+                          } </div>
+                        </div>
                     </div>
                 </div>
             `
@@ -2615,12 +3021,18 @@
             <div style="padding: 16px;">
               <h2 style="font-size: 24px; font-weight: 600; margin-bottom: 20px; color: var(--text-primary); letter-spacing: -0.02em;">Messages</h2>
               <div style="display: flex; flex-direction: column; gap: 0;">
-                ${messagesList.map(msg => `
+                ${messagesList
+                  .map(
+                    (msg) => `
                   <div
                     class="message-item"
-                    onclick="openMessage('${msg.id}', '${msg.name}', ${msg.isGroup})"
+                    onclick="openMessage('${msg.id}', '${msg.name}', ${
+                      msg.isGroup
+                    })"
                   >
-                    <div class="message-avatar" style="font-size: ${msg.isGroup ? '24px' : '14px'};">
+                    <div class="message-avatar" style="font-size: ${
+                      msg.isGroup ? "24px" : "14px"
+                    };">
                       ${msg.avatar}
                     </div>
                     <div class="message-content">
@@ -2632,13 +3044,19 @@
                         ${msg.lastMessage}
                       </div>
                     </div>
-                    ${msg.unread > 0 ? `
+                    ${
+                      msg.unread > 0
+                        ? `
                       <div class="message-unread-badge">
                         ${msg.unread}
                       </div>
-                    ` : ''}
+                    `
+                        : ""
+                    }
                   </div>
-                `).join('')}
+                `
+                  )
+                  .join("")}
               </div>
             </div>
           `;
@@ -2659,19 +3077,29 @@
         const chatMessagesContainer = document.getElementById("chatMessages");
         const messages = chatMessages[currentChatId] || [];
 
-        chatMessagesContainer.innerHTML = messages.map(msg => `
-          <div class="chat-message ${msg.isMe ? 'me' : ''}">
+        chatMessagesContainer.innerHTML = messages
+          .map(
+            (msg) => `
+          <div class="chat-message ${msg.isMe ? "me" : ""}">
             <div>
-              ${!msg.isMe ? `<div class="chat-message-sender">${msg.sender}</div>` : ''}
+              ${
+                !msg.isMe
+                  ? `<div class="chat-message-sender">${msg.sender}</div>`
+                  : ""
+              }
               <div class="chat-message-bubble">
                 ${msg.text}
               </div>
-              <div class="chat-message-timestamp" style="text-align: ${msg.isMe ? 'right' : 'left'};">
+              <div class="chat-message-timestamp" style="text-align: ${
+                msg.isMe ? "right" : "left"
+              };">
                 ${msg.timestamp}
               </div>
             </div>
           </div>
-        `).join('');
+        `
+          )
+          .join("");
 
         chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
       }
@@ -2684,8 +3112,11 @@
           const newMessage = {
             sender: "You",
             text: messageText,
-            timestamp: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }),
-            isMe: true
+            timestamp: new Date().toLocaleTimeString("en-US", {
+              hour: "numeric",
+              minute: "2-digit",
+            }),
+            isMe: true,
           };
 
           if (!chatMessages[currentChatId]) {
@@ -2694,7 +3125,9 @@
           chatMessages[currentChatId].push(newMessage);
 
           // Update message list
-          const msgIndex = messagesList.findIndex(m => m.id === currentChatId);
+          const msgIndex = messagesList.findIndex(
+            (m) => m.id === currentChatId
+          );
           if (msgIndex !== -1) {
             messagesList[msgIndex].lastMessage = messageText;
             messagesList[msgIndex].time = newMessage.timestamp;
@@ -2713,9 +3146,12 @@
             {
               sender: event.host,
               text: `Welcome to the ${event.title} group chat! 🎉`,
-              timestamp: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }),
-              isMe: false
-            }
+              timestamp: new Date().toLocaleTimeString("en-US", {
+                hour: "numeric",
+                minute: "2-digit",
+              }),
+              isMe: false,
+            },
           ];
 
           messagesList.unshift({
@@ -2725,13 +3161,13 @@
             time: "Just now",
             unread: 1,
             avatar: getCategoryIcon(event.category),
-            isGroup: true
+            isGroup: true,
           });
 
           groupChats[event.id] = {
             id: groupChatId,
             name: `${event.title} Group`,
-            eventId: event.id
+            eventId: event.id,
           };
         }
       }
